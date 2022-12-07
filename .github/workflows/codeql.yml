@@ -20,7 +20,7 @@ on:
   schedule:
     - cron: '20 2 * * 3'
 env:
-  CODEQL_ACTION_EXTRA_OPTIONS: '{"database":{"index-files":["--language","html", "--include-extension", ".aspx"]}}'
+  CODEQL_ACTION_EXTRA_OPTIONS: '{"database":{"index-files":["--language", "javascript", "--include-extension", ".aspx"]}}'
   
 jobs:
   analyze:
