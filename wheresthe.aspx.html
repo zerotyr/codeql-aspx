@@ -3,16 +3,21 @@
 <!DOCTYPE html>
 <html>
 <body>
-  <button onclick="myFunction()">Try it</button>
   <script type="text/javascript">
-      function handleMessageSend(messageId, senderEmail, messageContent)  {
-        database.save(messageId, senderEmail, messageContent);
-      }
+    var express = require('express'),
+        fs = require('fs');
 
-      function generateMessageHTML(messageId) {
-        let messageContent = database.loadContent(messageId);
-        return `<p class="messageContent">${messageContent}</p>`;
-      }
+     express().get('/list-directory', function(req, res) {
+        fs.readdir('/public', function (error, fileNames) {
+            var list = '<ul>';
+            fileNames.forEach(fileName => {
+                // BAD: `fileName` can contain HTML elements
+                list += '<li>' + fileName + '</li>';
+            });
+            list += '</ul>'
+            res.send(list);
+        });
+    });
     </script>
 </body>
 </html>
