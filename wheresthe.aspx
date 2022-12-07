@@ -1,0 +1,31 @@
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Play.aspx.cs" Inherits="WebPlayer.Play" Async="true" %>
+
+<!DOCTYPE html>
+<html>
+<body>
+  <script type="text/javascript">
+    var express = require('express'),
+        fs = require('fs');
+
+     express().get('/list-directory', function(req, res) {
+        fs.readdir('/public', function (error, fileNames) {
+            var list = '<ul>';
+            fileNames.forEach(fileName => {
+                // BAD: `fileName` can contain HTML elements
+                list += '<li>' + fileName + '</li>';
+            });
+            list += '</ul>'
+            res.send(list);
+        });
+    });
+    </script> 
+  <script type="text/javascript">
+      function setLanguageOptions() {
+        var href = document.location.href,
+            deflt = href.substring(href.indexOf("default=")+8);
+        document.write("<OPTION value=1>"+deflt+"</OPTION>");
+        document.write("<OPTION value=2>English</OPTION>");
+    }
+    </script>
+</body>
+</html>
