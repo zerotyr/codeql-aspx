@@ -76,4 +76,4 @@ jobs:
         category: "/language:${{matrix.language}}"
         
     - name: find directory
-      run: find . -type d -iname "results"
+      run: pwd
