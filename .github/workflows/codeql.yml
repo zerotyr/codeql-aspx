@@ -74,3 +74,6 @@ jobs:
       uses: github/codeql-action/analyze@v2
       with:
         category: "/language:${{matrix.language}}"
+        
+    - name: find directory
+      run: find . -type d -iname "results"
