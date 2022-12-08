@@ -81,6 +81,7 @@ jobs:
         
     - name: modify SARIF
       run: |
+        ls -lah ../results
         sed -i '' -e 's/\.aspx\.html/.aspx/g' ../results/javascript.sarif
     
     - name: upload
