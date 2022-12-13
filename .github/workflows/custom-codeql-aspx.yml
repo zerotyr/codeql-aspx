@@ -28,19 +28,18 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
-    - name: CodeQL init
-      uses: github/codeql-action/init@v2
-      with:
-        languages: javascript
-        db-location: ./aspx-js-db
+
     - name: CodeQL tracing
       run: |
         export PATH=$PATH:$(find $RUNNER_TOOL_CACHE -type d -name "codeql" -exec test -e '{}'/codeql \; -print)
-        codeql database init --overwrite -l javascript -s . aspx-js-db
-        codeql database trace-command --index-traceless-dbs -- aspx-js-db
-        codeql database trace-command --no-tracing -- aspx-js-db $(codeql version --format=json | jq -r .unpackedLocataion)/tools/linux64/java/bin/java -cp "$(codeql resolve extractor --language=javascript)/tools/extractor-javascript.jar" com.semmle.js.extractor.Main --file-type HTML --exclude '**/*.js' --exclude '**/*.html' --exclude '**/*.ts' --include '**/*.aspx' .
-        codeql database finalize aspx-js-db
-        codeql database analyze --format=sarifv2.1.0 -o aspx.sarif ./aspx-js-db
+        which codeql
+        codeql version
+        codeql resolve extractor --language=javascript
+        # codeql database init --overwrite -l javascript -s . aspx-js-db
+        # codeql database trace-command --index-traceless-dbs -- aspx-js-db
+        # codeql database trace-command --no-tracing -- aspx-js-db $(codeql version --format=json | jq -r .unpackedLocataion)/tools/linux64/java/bin/java -cp "$(codeql resolve extractor --language=javascript)/tools/extractor-javascript.jar" com.semmle.js.extractor.Main --file-type HTML --exclude '**/*.js' --exclude '**/*.html' --exclude '**/*.ts' --include '**/*.aspx' .
+        # codeql database finalize aspx-js-db
+        # codeql database analyze --format=sarifv2.1.0 -o aspx.sarif ./aspx-js-db
     
     # - name: upload
       # uses: github/codeql-action/upload-sarif@v2
