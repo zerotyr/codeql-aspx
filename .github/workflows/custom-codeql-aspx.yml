@@ -9,7 +9,7 @@ on:
   schedule:
     - cron: '20 2 * * 3'
 env:
-  TOOL_CACHE: ${{ runner.tool_cache }}
+  TOOL_CACHE: ${{ RUNNER_TOOL_CACHE }}
 
 jobs:
   analyze:
