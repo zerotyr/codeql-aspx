@@ -35,8 +35,10 @@ jobs:
       with:
         languages: javascript
         db-location: ./aspx-js-db
-    
-    - name: CodeQL database init
+    - name: find CodeQL directory
+      run: | 
+        find $RUNNER_TOOL_CACHE -type d -name "codeql"
+    - name: CodeQL tracing
       run: |
         # codeql database init --overwrite -l javascript -s . aspx-js-db
         $RUNNER_TOOL_CACHE/codeql database trace-command --index-traceless-dbs -- aspx-js-db
