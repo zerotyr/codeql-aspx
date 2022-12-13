@@ -39,7 +39,7 @@ jobs:
       run: | 
         export PATH=$PATH:$(find $RUNNER_TOOL_CACHE -type f -name "codeql" -executable)
         echo $PATH
-    - name: CodeQL tracing
+    # - name: CodeQL tracing
       # run: |
         # codeql database init --overwrite -l javascript -s . aspx-js-db
         # $RUNNER_TOOL_CACHE/codeql database trace-command --index-traceless-dbs -- aspx-js-db
