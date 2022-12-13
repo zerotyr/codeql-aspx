@@ -21,7 +21,7 @@ on:
     - cron: '20 2 * * 3'
 
 env:
-  CODEQL_ACTION_EXTRA_OPTIONS: '{"database":{"trace-command":["--index-traceless-db","--","aspx-js-db/javascript"]},"database":{"trace-command":["--no-tracing", "aspx-js-db/javascript", "$(codeql version --format=json | jq -r .unpackedLocation)/tools/linux64/java/bin/java", "-cp", "\"$(codeql resolve extractor --language=javascript)/tools/extractor-javascript.jar\"", "com.semmle.js.extractor.Main", "--file-type", "HTML", "--exclude", "**/*.js", "--exclude", "**/*.html", "--exclude", "**/*.ts", "--include", "**/*.aspx", "."]}}'
+  CODEQL_ACTION_EXTRA_OPTIONS: '{"database":{"trace-command":["--index-traceless-db","--","./aspx-js-db/javascript"]},"database":{"trace-command":["--no-tracing", "./aspx-js-db/javascript", "$(codeql version --format=json | jq -r .unpackedLocation)/tools/linux64/java/bin/java", "-cp", "\"$(codeql resolve extractor --language=javascript)/tools/extractor-javascript.jar\"", "com.semmle.js.extractor.Main", "--file-type", "HTML", "--exclude", "**/*.js", "--exclude", "**/*.html", "--exclude", "**/*.ts", "--include", "**/*.aspx", "."]}}'
 
 jobs:
   analyze:
