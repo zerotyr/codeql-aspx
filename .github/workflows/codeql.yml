@@ -42,11 +42,11 @@ jobs:
       
     - name: setup aspx files
       run: |
-        ls -lah
         find . -type f -iname "*.aspx" -exec mv {} {}.html \;
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
+      id: init
       uses: github/codeql-action/init@v2
       with:
         languages: ${{ matrix.language }}
@@ -63,30 +63,26 @@ jobs:
     - name: Autobuild
       uses: github/codeql-action/autobuild@v2
 
-    # ℹ️ Command-line programs to run using the OS shell.
-    # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
-
-    #   If the Autobuild fails above, remove it and uncomment the following three lines.
-    #   modify them (or add more) to build your code if your project, please refer to the EXAMPLE below for guidance.
-
-    # - run: |
-    #   echo "Run, Build Application using script"
-    #   ./location_of_script_within_repo/buildscript.sh
-
-    - name: Perform CodeQL Analysis
+    - name: Perform CodeQL Analysis (JS)
+      if: ${{ matrix.language == 'javascript' }}
       uses: github/codeql-action/analyze@v2
       with:
         category: "/language:${{matrix.language}}"
         upload: false
         
+    - name: Perform CodeQL Analysis
+      if: ${{ matrix.language != 'javascript' }}
+      uses: github/codeql-action/analyze@v2
+      with:
+        category: "/language:${{matrix.language}}"
+        
     - name: modify SARIF
+      shell: bash
       run: |
-        whoami
-        ls -lah ../results
         sed -i 's/\.aspx\.html/.aspx/g' ../results/javascript.sarif
     
     - name: upload
       uses: github/codeql-action/upload-sarif@v2
       with: 
         sarif_file: ../results/javascript.sarif
-        category: aspx-mod
+        category: js-aspx
