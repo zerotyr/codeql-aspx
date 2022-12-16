@@ -20,8 +20,8 @@ on:
   schedule:
     - cron: '20 2 * * 3'
 
-env:
-  CODEQL_ACTION_EXTRA_OPTIONS: '{"database":{"trace-command":["--index-traceless-db","--","./aspx-js-db/javascript"],"trace-command":["--no-tracing", "./aspx-js-db/javascript", "$(codeql version --format=json | jq -r .unpackedLocation)/tools/linux64/java/bin/java", "-cp", "\"$(codeql resolve extractor --language=javascript)/tools/extractor-javascript.jar\"", "com.semmle.js.extractor.Main", "--file-type", "HTML", "--exclude", "\"**/*.js\"", "--exclude", "\"**/*.html\"", "--exclude", "\"**/*.ts\"", "--include", "\"**/*.aspx\""]}}'
+#env:
+#  CODEQL_ACTION_EXTRA_OPTIONS: '{"database":{"trace-command":["--index-traceless-db","--","./aspx-js-db/javascript"],"trace-command":["--no-tracing", "./aspx-js-db/javascript", "$(codeql version --format=json | jq -r .unpackedLocation)/tools/linux64/java/bin/java", "-cp", "\"$(codeql resolve extractor --language=javascript)/tools/extractor-javascript.jar\"", "com.semmle.js.extractor.Main", "--file-type", "HTML", "--exclude", "\"**/*.js\"", "--exclude", "\"**/*.html\"", "--exclude", "\"**/*.ts\"", "--include", "\"**/*.aspx\""]}}'
   
 jobs:
   analyze:
@@ -51,7 +51,7 @@ jobs:
       uses: github/codeql-action/init@v2
       with:
         languages: ${{ matrix.language }}
-        db-location: ./aspx-js-db
+        db-location: 'c:\windows\temp\aspx-js-db'
         # If you wish to specify custom queries, you can do so here or in a config file.
         # By default, queries listed here will override any specified in a config file.
         # Prefix the list here with "+" to use these queries and those in the config file.
