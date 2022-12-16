@@ -7,11 +7,11 @@ on:
 jobs: 
   diskchk:
     runs-on: windows-latest
-  strategy:
-    fail-fast: false
+    strategy:
+      fail-fast: false
     
-  steps:
-  - name: check disk
-    shell: powershell
-    run: wmic logicaldisk get size,freespace,caption
+    steps:
+    - name: check disk
+      shell: powershell
+      run: wmic logicaldisk get size,freespace,caption
     
