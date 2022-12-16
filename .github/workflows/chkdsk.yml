@@ -11,7 +11,14 @@ jobs:
       fail-fast: false
     
     steps:
+    - name: checkout
+      uses: actions/checkout@v2.6.0
+      
     - name: check disk
       shell: powershell
-      run: wmic logicaldisk get size,freespace,caption
+      run: | 
+        cd
+        diskusage /h .
+        wmic logicaldisk get size,freespace,caption
+        
     
