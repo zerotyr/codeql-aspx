@@ -39,7 +39,8 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
-      
+    
+    # append .html to all .aspx files
     - name: setup aspx files
       shell: bash
       run: |
@@ -51,16 +52,7 @@ jobs:
       uses: github/codeql-action/init@v2
       with:
         languages: ${{ matrix.language }}
-        # If you wish to specify custom queries, you can do so here or in a config file.
-        # By default, queries listed here will override any specified in a config file.
-        # Prefix the list here with "+" to use these queries and those in the config file.
-
-        # Details on CodeQL's query packs refer to : https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
-        # queries: security-extended,security-and-quality
-
-
-    # Autobuild attempts to build any compiled languages  (C/C++, C#, Go, or Java).
-    # If this step fails, then you should remove it and run the build manually (see below)
+ 
     - name: Autobuild
       uses: github/codeql-action/autobuild@v2
 
@@ -76,12 +68,16 @@ jobs:
       uses: github/codeql-action/analyze@v2
       with:
         category: "/language:${{matrix.language}}"
-        
+      
+    # strip .html extension from .aspx files in SARIF
+    # macOS: if using a macOS runner, use alternative sed syntax
     - name: modify SARIF
       shell: bash
       run: |
         sed -i 's/\.aspx\.html/.aspx/g' ../results/javascript.sarif
-    
+        # sed -i '' -e 's/\.aspx\.html/.aspx/g' ../results/javascript.sarif
+
+    # upload the now modified SARIF
     - name: upload
       uses: github/codeql-action/upload-sarif@v2
       with: 
