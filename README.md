@@ -4,7 +4,9 @@ This repo is used to demo different ways of scanning `.aspx` files. `aspx` files
 
 ## disclaimer
 
-CodeQL does not currently support [aspx](https://codeql.github.com/docs/codeql-overview/supported-languages-and-frameworks/) files, so this workaround is not guaranteed to work in all scenarios. use at your own risk. Furthermore, all example workflows contained in this repository make certain assumptions, and any users of these workflows should review them carefully.
+**Use at your own risk.**
+
+[CodeQL does not currently support](https://codeql.github.com/docs/codeql-overview/supported-languages-and-frameworks/) `aspx` files, so this workaround is not guaranteed to work in all scenarios. Furthermore, all example workflows contained in this repository make certain assumptions, and any users of these workflows should review them carefully.
 
 **Currently, the only way to guarantee accurate scanning of inline JS is to remove all inline JS and move these scripts to their own `.js` files**.
 
@@ -12,12 +14,24 @@ CodeQL does not currently support [aspx](https://codeql.github.com/docs/codeql-o
 
 One method of scanning `aspx` files with the CodeQL action is to add some additional steps to the default workflow. See [custom-codeql-action-aspx.yml](./.github/workflows/custom-codeql-action-aspx.yml) for the full workflow.
 
-1. Modify all `aspx` files to have a `.html` extension ([using `find`](https://github.com/michael-scott-paper-company/ayespex/blob/main/.github/workflows/custom-codeql-action-aspx.yml#L43))
-2. Perform the typical analysis, but ensure the [JS SARIF](https://github.com/michael-scott-paper-company/ayespex/blob/main/.github/workflows/custom-codeql-action-aspx.yml#L59) doesn't upload automatically
-3. [Modify the resulting SARIF](https://github.com/michael-scott-paper-company/ayespex/blob/main/.github/workflows/custom-codeql-action-aspx.yml#L72) by stripping the `.html` extension
-4. [Manually upload the now modified SARIF file](https://github.com/michael-scott-paper-company/ayespex/blob/main/.github/workflows/custom-codeql-action-aspx.yml#L80)
+1. [Modify all `aspx` files](./.github/workflows/custom-codeql-action-aspx.yml#L43) to have a `.html` extension 
+2. Perform the typical analysis, but ensure the [JS SARIF](./.github/workflows/custom-codeql-action-aspx.yml#L59) doesn't upload automatically
+3. [Modify the resulting SARIF](./.github/workflows/custom-codeql-action-aspx.yml#L72) by stripping the `.html` extension
+4. [Manually upload the now modified SARIF file](./.github/workflows/custom-codeql-action-aspx.yml#L80)
 
 If done properly, the results will display under the code scanning alerts section of security overview while pointing to the correct file and correct line of code.
 
+## use the CodeQL CLI
 
+The other method is to eschew using the CodeQL actions and to use the CodeQL CLI instead. Again, since CodeQL doesn't scan `aspx` files, CodeQL will need to be manipulated into scanning these files. This can be done with custom [CodeQL CLI commands](https://codeql.github.com/docs/codeql-cli/manual/). If using this method, it's recommended to give this action its own workflow file to avoid confusion.
 
+See the [custom-codeql-cli-aspx.yml](./.github/workflows/custom-codeql-cli-aspx.yml#L32) workflow for a full example.
+
+1. Initialize the CodeQL database
+2. Configure the trace command 
+3. Tell the CodeQL extractor to target `.aspx` files
+4. Finalize the database
+5. Analyze the database
+6. Upload the results
+
+The CodeQL CLI has an [upload command](https://codeql.github.com/docs/codeql-cli/manual/github-upload-results/); however, it may be easier to use the `github/codeql-action/upload-sarif` action. If you opt to use the CLI command, you must pass in a personal access token (PAT) with the requisite permissions. To avoid overwriting results of a previous scan, ensure you set a unique SARIF category.
