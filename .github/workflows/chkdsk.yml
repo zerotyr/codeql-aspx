@@ -1,24 +1,16 @@
 name: check disk size
 
 on:
-  push: 
-    branches: [ "main" ]
+  workflow_dispatch:
 
 jobs: 
-  diskchk:
-    runs-on: windows-latest
+  probing:
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
     
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2.6.0
-      
-    - name: check disk
-      shell: powershell
-      run: | 
-        cd
-        diskusage /h .
-        wmic logicaldisk get size,freespace,caption
+    steps:      
+    - name: cpu info
+      run: lscpu
         
     
