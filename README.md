@@ -21,7 +21,7 @@ If done properly, the results will display under the code scanning alerts sectio
 
 ## use the CodeQL CLI
 
-**Only use this method if you are not using the Actions.**
+**Only use this method if you cannot use the Actions.**
 
 The other method is to eschew using the CodeQL actions and to use the CodeQL CLI instead. Again, since CodeQL doesn't scan `aspx` files, CodeQL will need to be manipulated into scanning these files. This can be done with [CodeQL CLI commands](https://codeql.github.com/docs/codeql-cli/manual/). The demo does use Actions, but the CLI commands can be easily copied and modified for use in other systems. 
 
