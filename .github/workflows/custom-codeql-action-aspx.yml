@@ -75,6 +75,7 @@ jobs:
       shell: bash
       run: |
         sed -i 's/\.aspx\.html/.aspx/g' ../results/javascript.sarif
+        # macos sed
         # sed -i '' -e 's/\.aspx\.html/.aspx/g' ../results/javascript.sarif
 
     # upload the now modified SARIF
