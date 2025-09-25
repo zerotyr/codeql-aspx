@@ -4,7 +4,7 @@ This repo is used to demo different ways of scanning `.aspx` files. `aspx` files
 
 ## results are not guaranteed
 
-[CodeQL does not currently support](https://codeql.github.com/docs/codeql-overview/supported-languages-and-frameworks/) `aspx` files, so this workaround may produce false positives or false negatives. Furthermore, all example workflows contained in this repository make certain assumptions, and any users of these workflows should review them carefully.
+[CodeQL does not currently support](https://codeql.github.com/docs/codeql-overview/supported-languages-and-frameworks/) `aspx` files, so this workaround may produce false positives or false negatives.
 
 For accurate results and scanning of inline JS inside `.aspx` files, those `.aspx` files should be refactored so they contain no inline JS code. That is, all inline JS code should be removed and stored in their respective `.js/.ts/.whatevers` files.
 
